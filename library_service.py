@@ -27,7 +27,7 @@ class GetStudentPosition():
         param = param.replace("{{fr_end}}", str(end_time))
         url = url + param
         response, conetent = http.request(uri=url, method='GET')
-        # print(conetent.decode('utf-8'))
+        print(conetent.decode('utf-8'))
         return conetent.decode('utf-8')
     def get_seat_info_dict(self, date, start_time, end_time):
 
@@ -71,14 +71,14 @@ class GetStudentPosition():
                 continue
             if element.get('ts')[0].get('owner') == "null":
                 name = element.get('ts')[0].get('owner')
-                print(name)
+                # print(name)
                 continue
             student = Student()
             student.id = element.get('id')
             student.name = element.get('ts')[0].get('owner')
             student.seat = element.get('labName') + " " + element.get('title')
-            student.dev_id = element.get('dev_id')
-            student.dev_name = element.get('dev_name')
+            student.dev_id = element.get('devId')
+            student.dev_name = element.get('devName')
             students.append(student)
         return students
 
