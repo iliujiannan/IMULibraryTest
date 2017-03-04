@@ -27,9 +27,9 @@ class GetStudentPosition():
         param = param.replace("{{fr_end}}", str(end_time))
         url = url + param
         response, conetent = http.request(uri=url, method='GET')
-        print(conetent.decode('utf-8'))
+        # print(conetent.decode('utf-8'))
         return conetent.decode('utf-8')
-    def get_seat_info_dict(self, date, start_time, end_time):
+    def get_seat_info_list(self, date, start_time, end_time):
 
         list = []
         # 1B
@@ -186,9 +186,8 @@ class Subscribe():
                 'msg': 'subscribe服务异常，请稍后重试'
             }
             return array
-"""
-main
-"""
+
+#调用
 # g = GetStudentPosition()
 # for student in g.get_seat_info_dict('2017-03-02', '17:10', '21:10'):
 #     if student.name == '郑希阳':
@@ -199,4 +198,37 @@ main
 # s = Subscribe('0151122350', '0151122350')
 # result = s.subscribe('100486431', '2017-03-03 20:00', '2017-03-03 21:00')
 # print(result['msg'])
+def call_get_seat_infor_list(date, start_time, end_time):
+    try:
+        g = GetStudentPosition()
+        data_list = g.get_seat_info_list(date, start_time, end_time)
+        result = {
+            'statues': 1,
+            'msg': 'ok',
+            'data': data_list
+        }
+        return json.dumps(result)
+    except Exception as e:
+        result = {
+            'statues': 0,
+            'msg': '服务异常',
+            'data': None
+        }
+        return json.dumps(result)
+def subscribe(zjh, pwd, dev_id, start_time, end_time):
+    try:
+        s = Subscribe(zjh, pwd)
+        result = s.subscribe(dev_id, start_time, end_time)
+        return json.dumps(result)
+    except Exception as e:
+        result = {
+            'statues': 0,
+            'msg': '服务异常',
+            'data': None
+        }
+        return json.dumps(result)
+
+
+
+
 
