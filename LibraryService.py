@@ -12,6 +12,8 @@ class Student:
     dev_name = ''
 
 class GetStudentPosition():
+    def __init__(self):
+        pass
     def send_request(self, room_id, date, start_time, end_time):
         # name = '1B%E5%8C%BA'
         http = Http()
